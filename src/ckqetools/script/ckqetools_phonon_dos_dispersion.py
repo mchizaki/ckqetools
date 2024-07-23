@@ -100,8 +100,7 @@ dos_figure_props = cplt.get_figure_props(
 dispersion_figure_props = cplt.get_figure_props(
     plt_props = dict(
         xlabel = 'Wavenumber',
-        ylabel = 'Energy (meV)',
-        title = args.title
+        ylabel = 'Energy (meV)'
     ),
     ymin = args.emin,
     ymax = args.emax,
