@@ -127,6 +127,7 @@ with cplt.ckfigure( *figure_props_list, common_subplot_props = False ):
     #--------------------------------------------------------------#
     # Dispersion (meV)
     #--------------------------------------------------------------#
+    plt.subplot( gs[0, 0] )
     for i_mode in range( phonon.n_modes ):
         q_points = []
         energies = []
