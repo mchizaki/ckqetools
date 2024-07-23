@@ -1,0 +1,9 @@
+build/
+*.egg-info/
+**/_version.py
+
+**/__pycache__/**
+result/
+tests/
+tools/
+
