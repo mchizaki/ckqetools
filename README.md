@@ -5,7 +5,7 @@ Quantum ESPRESSO (QE) の結果を解析するためのツール
 
 ## Installation
 
-Python (3.11で動作確認)
+Python (Python3.10で動作確認)
 
 インストール：
 
