@@ -19,49 +19,55 @@ PLOT_PROPS = dict(
     linewidth = 1
 )
 
-#==============================================================#
-# Arguments
-#==============================================================#
-parser = argparse.ArgumentParser(
-    description = 'plot DOS from matdyn.dos file. \
-        '
-)
-addarg_dos( parser )
-addarg_saveprops( parser )
-addarg_figprops( parser )
 
-args = parser.parse_args()
+def main():
+    #==============================================================#
+    # Arguments
+    #==============================================================#
+    parser = argparse.ArgumentParser(
+        description = 'plot DOS from matdyn.dos file. \
+            '
+    )
+    addarg_dos( parser )
+    addarg_saveprops( parser )
+    addarg_figprops( parser )
 
-
-#==============================================================#
-# Main
-#==============================================================#
-dos = DOS(
-    path = args.dos_path
-)
+    args = parser.parse_args()
 
 
-#--------------------------------------------------------------#
-# DOS vs Energy
-#--------------------------------------------------------------#
-margins = [
-    0.05 if args.emin is None else 0,
-    0.05 if args.emax is None else 0
-]
+    #==============================================================#
+    # Main
+    #==============================================================#
+    dos = DOS(
+        path = args.dos_path
+    )
 
-figure_props = cplt.get_figure_props(
-    save_dirname = f'{args.savedir}',
-    save_fname   = f'{SAVE_FNAME}{args.savefname_extra}',
-    plt_props = dict(
-        xlabel = 'Energy (meV)',
-        ylabel = 'DOS',
-        title = args.title
-    ),
-    xmin = args.emin,
-    xmax = args.emax,
-    axes_xmargins = margins,
-    axes_ymargins = [ 0, 0.05 ]
-)
-with cplt.ckfigure( **figure_props ):
-    plt.figure()
-    plt.plot( dos.energy_meV, dos.dos, **PLOT_PROPS )
+
+    #--------------------------------------------------------------#
+    # DOS vs Energy
+    #--------------------------------------------------------------#
+    margins = [
+        0.05 if args.emin is None else 0,
+        0.05 if args.emax is None else 0
+    ]
+
+    figure_props = cplt.get_figure_props(
+        save_dirname = f'{args.savedir}',
+        save_fname   = f'{SAVE_FNAME}{args.savefname_extra}',
+        plt_props = dict(
+            xlabel = 'Energy (meV)',
+            ylabel = 'DOS',
+            title = args.title
+        ),
+        xmin = args.emin,
+        xmax = args.emax,
+        axes_xmargins = margins,
+        axes_ymargins = [ 0, 0.05 ]
+    )
+    with cplt.ckfigure( **figure_props ):
+        plt.figure()
+        plt.plot( dos.energy_meV, dos.dos, **PLOT_PROPS )
+
+
+if __name__ == '__main__':
+    main()
