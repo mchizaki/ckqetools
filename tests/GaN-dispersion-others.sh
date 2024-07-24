@@ -48,7 +48,7 @@ ckqetools-phonon-dispersion \
     --scf-output-path        sample/GaN/scf.out \
     --flvec-path             sample/GaN/freq/matdyn.modes \
     --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
-    --savefname-extra        __GaN_reorder \
+    --savefname-extra        __GaN_disable_reorder \
     --title                  GaN \
     --savedir                result/GaN \
     --colorful --disable-reorder

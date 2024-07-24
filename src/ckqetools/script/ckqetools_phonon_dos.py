@@ -9,6 +9,7 @@ import ckplotlib.ckplot as cplt
 from ckqetools.phonon.dos import DOS
 from ckqetools.pyrun_props.add_argument import (
     addarg_dos,
+    addarg_kayser,
     addarg_saveprops,
     addarg_figprops
 )
@@ -29,6 +30,8 @@ def main():
             '
     )
     addarg_dos( parser )
+    addarg_kayser( parser )
+
     addarg_saveprops( parser )
     addarg_figprops( parser )
 
@@ -47,26 +50,32 @@ def main():
     # DOS vs Energy
     #--------------------------------------------------------------#
     margins = [
-        0.05 if args.emin is None else 0,
-        0.05 if args.emax is None else 0
+        0.05 if args.vmin is None else 0,
+        0.05 if args.vmax is None else 0
     ]
+    if args.kayser:
+        freq_unit_label = 'Frequency (cm$^{-1}$)'
+        dos_freq = dos.frequency_kayser
+    else:
+        freq_unit_label = 'Energy (meV)'
+        dos_freq = dos.energy_meV
 
     figure_props = cplt.get_figure_props(
         save_dirname = f'{args.savedir}',
         save_fname   = f'{SAVE_FNAME}{args.savefname_extra}',
         plt_props = dict(
-            xlabel = 'Energy (meV)',
+            xlabel = freq_unit_label,
             ylabel = 'DOS',
             title = args.title
         ),
-        xmin = args.emin,
-        xmax = args.emax,
+        xmin = args.vmin,
+        xmax = args.vmax,
         axes_xmargins = margins,
         axes_ymargins = [ 0, 0.05 ]
     )
     with cplt.ckfigure( **figure_props ):
         plt.figure()
-        plt.plot( dos.energy_meV, dos.dos, **PLOT_PROPS )
+        plt.plot( dos_freq, dos.dos, **PLOT_PROPS )
 
 
 if __name__ == '__main__':

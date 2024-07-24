@@ -15,6 +15,7 @@ from ckqetools.pyrun_props.add_argument import (
     addarg_phonon,
     addarg_dos,
     addarg_matdyn_freq_input,
+    addarg_kayser,
     addarg_saveprops,
     addarg_figprops
 )
@@ -43,6 +44,7 @@ def main():
     addarg_phonon( parser )
     addarg_matdyn_freq_input( parser )
     addarg_highsym_pts_labels( parser )
+    addarg_kayser( parser )
 
     addarg_saveprops( parser )
     addarg_figprops( parser )
@@ -69,7 +71,7 @@ def main():
         flvec_path          = args.flvec_path,
         matdyn_freq_in_path = args.matdyn_freq_input_path,
         json_out_path       = args.phonon_json_path,
-        highsym_qpts_names  = args.high_symmetry_point_names,
+        highsym_qpts_labels = args.high_symmetry_point_labels,
         reorder             = not args.disable_reorder
     )
 
@@ -81,10 +83,18 @@ def main():
     #--------------------------------------------------------------#
     if args.colorful:
         DISPERSION_PLOT_PROPS.pop( 'color' )
+    if args.kayser:
+        freq_unit_label = 'Frequency (cm$^{-1}$)'
+        get_eigenvalues = phonon.get_eigenvalue_kayser
+        dos_freq = dos.frequency_kayser
+    else:
+        freq_unit_label = 'Energy (meV)'
+        get_eigenvalues = phonon.get_eigenvalue_meV
+        dos_freq = dos.energy_meV
 
     margins = [
-        0.05 if args.emin is None else 0,
-        0.05 if args.emax is None else 0
+        0.05 if args.vmin is None else 0,
+        0.05 if args.vmax is None else 0
     ]
 
     dos_figure_props = cplt.get_figure_props(
@@ -93,8 +103,8 @@ def main():
         plt_props = dict(
             xlabel = 'DOS'
         ),
-        ymin = args.emin,
-        ymax = args.emax,
+        ymin = args.vmin,
+        ymax = args.vmax,
         axes_xmargins = [ 0, 0.05 ],
         axes_ymargins = margins,
         common_xlim = False
@@ -102,10 +112,10 @@ def main():
     dispersion_figure_props = cplt.get_figure_props(
         plt_props = dict(
             xlabel = 'Wavenumber',
-            ylabel = 'Energy (meV)'
+            ylabel = freq_unit_label,
         ),
-        ymin = args.emin,
-        ymax = args.emax,
+        ymin = args.vmin,
+        ymax = args.vmax,
         axes_xmargins = [ 0, 0 ],
         axes_ymargins = margins,
         common_xlim = False
@@ -142,7 +152,7 @@ def main():
                     energies.append( np.nan )
 
                 q_points.extend( phonon.distances[ slice_region ] )
-                energies.extend( phonon.get_eigenvalue_meV(
+                energies.extend( get_eigenvalues(
                     i_q    = slice_region,
                     i_mode = i_mode
                 ))
@@ -159,7 +169,11 @@ def main():
         # DOS
         #--------------------------------------------------------------#
         plt.subplot( gs[0, 1] )
-        plt.plot( dos.dos, dos.energy_meV, **DOS_PLOT_PROPS )
+        plt.plot(
+            dos.dos,
+            dos_freq,
+            **DOS_PLOT_PROPS
+        )
         plt.tick_params( labelleft = False, which = 'major' )
 
         off_tick_keys = [

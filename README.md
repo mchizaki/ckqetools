@@ -1,13 +1,19 @@
 # ckqetools
-Tools to analyze results by Quantum ESPRESSO
+Quantum ESPRESSO (QE)の結果を解析するためのツール。
 
 
 
 ## Installation
 
-Python (>= 3.10)と次のライブラリが必要。 and following libraries.
+Python (3.11で動作確認)
 
-pipで自動でインストールされるもの：
+インストール：
+
+```
+$ pip install git+https://github.com/mchizaki/ckqetools.git
+```
+
+次のライブラリが自動でインストールされる：
 
 - numpy
 - matplotlib
@@ -15,10 +21,6 @@ pipで自動でインストールされるもの：
 - qe-tools
 - Flask
 - tools-barebone
-
-```
-$ pip install git+https://github.com/mchizaki/ckqetools.git
-```
 
 また，[ckplotlib](https://github.com/mchizaki/ckplotlib)が必要になる：
 
@@ -40,7 +42,13 @@ $ pip uninstall ckqetools
 
 ### サンプルファイル
 
-GaNのユニットセルを例に説明を行う。QEの結果のサンプルファイルを `tests/sample/GaN/` 内に格納した。次のようなディレクトリ構造になっている。
+次図のGaNのユニットセル（格子定数 $a = 3.18893040\ \mathrm{\AA}$, $c = 5.19235725\ \mathrm{\AA}$）を例に説明を行う。
+
+![GaN111](figs/GaN111.png)
+
+
+
+QEの結果のサンプルファイルを `tests/sample/GaN/` 内に格納した。次のようなディレクトリ構造になっている。
 
 ```
 📂tests/sample/GaN/
@@ -69,7 +77,35 @@ GaNのユニットセルを例に説明を行う。QEの結果のサンプルフ
 
 ### フォノンのDOS
 
+`ckqetools-phonon-dos`
+
+```
+$ ckqetools-phonon-dos -h
+
+usage: ckqetools-phonon-dos [-h] --dos-path DOS_PATH [--kayser] [--savedir SAVEDIR]
+                            [--savefname-extra SAVEFNAME_EXTRA] [--title TITLE] [--vmin VMIN] [--vmax VMAX]
+
+plot DOS from matdyn.dos file.
+
+options:
+  -h, --help            show this help message and exit
+  --dos-path DOS_PATH   matdyn.dos file path
+  --kayser              if True: phonon energy unit is kayser (cm^-1)
+  --savedir SAVEDIR     directory name of saved figure [default: result]
+  --savefname-extra SAVEFNAME_EXTRA
+                        extra file name of saved figure
+  --title TITLE         title of figure [default: None]
+  --vmin VMIN           min val of figure [default: 0]
+  --vmax VMAX           max val of figure [default: None]
+```
+
+
+
 📂tests/ へ移動
+
+
+
+#### sample
 
 ```bash
 $ ckqetools-phonon-dos \
@@ -79,102 +115,15 @@ $ ckqetools-phonon-dos \
     --savedir                result/GaN
 ```
 
+![GaN-dos](figs/dos__GaN.svg)
+
+
+
 
 
 ### フォノン分散
 
-📂tests/ へ移動
-
-```
-$ ckqetools-phonon-dispersion \
-    --scf-input-path         sample/GaN/scf.in \
-    --scf-output-path        sample/GaN/scf.out \
-    --flvec-path             sample/GaN/freq/matdyn.modes \
-    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
-    --savefname-extra        __GaN \
-    --title                  GaN \
-    --savedir                result/GaN
-```
-
-`ckqetools_phonon_dispersion` を実行する。
-
-
-
-#### sample1
-
-```bash
-ckqetools_phonon_dispersion.py \
-    --scf-input-path  sample/GaN/scf.in \
-    --scf-output-path sample/GaN/scf.out \
-    --flvec-path sample/GaN/freq/matdyn.modes \
-    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
-    --savefname-extra __GaN \
-    --title GaN \
-    --savedir result
-```
-
-`result/dispersion__GaN.*` に出力される。
-
-![dispersion-GaN](C:/Users/mczk/OneDrive/ChibaUniv/Lab/first_principles_calculation/phonon/fig/dispersion/dispersion__GaN.svg)
-
-
-
-#### sample2
-
-`--colorful` オプション付き：
-
-![dispersion-GaN-color](C:/Users/mczk/OneDrive/ChibaUniv/Lab/first_principles_calculation/phonon/fig/dispersion/dispersion__GaN_color.svg)
-
-
-
-#### sample3
-
-`--disable-reorder` オプション付き：
-
-![dispersion-GaN-color-not-reorder](C:/Users/mczk/OneDrive/ChibaUniv/Lab/first_principles_calculation/phonon/fig/dispersion/dispersion__GaN_color_not_reorder.svg)
-
-単に固有値の値の順に線を繋げただけになる。reorderする場合は，ある $q$ と隣の $q$ のそれぞれの固有ベクトルを比較して，適切なつなぎ方をする。（phononwebのサブルーチンを利用）。
-
-
-
-#### sample4
-
-データ点を20刻みから100刻みに変更
-
-![dispersion-GaN100](C:/Users/mczk/OneDrive/ChibaUniv/Lab/first_principles_calculation/phonon/fig/dispersion/dispersion__GaN100.svg)
-
-
-
-
-
-
-
-## 実行スクリプト一覧
-
-### ckqetools-phonon-dos
-
-```
-$ ckqetools-phonon-dos -h
-
-usage: ckqetools-phonon-dos [-h] --dos-path DOS_PATH [--savedir SAVEDIR] [--savefname-extra SAVEFNAME_EXTRA]
-                            [--title TITLE] [--emin EMIN] [--emax EMAX]
-
-plot DOS from matdyn.dos file.
-
-options:
-  -h, --help            show this help message and exit
-  --dos-path DOS_PATH   matdyn.dos file path
-  --savedir SAVEDIR     directory name of saved figure [default: result]
-  --savefname-extra SAVEFNAME_EXTRA
-                        extra file name of saved figure
-  --title TITLE         title of figure [default: None]
-  --emin EMIN           Emin of figure [default: 0]
-  --emax EMAX           Emax of figure [default: None]
-```
-
-
-
-### ckqetools-phonon-dispersion
+`ckqetools-phonon-dispersion`
 
 ```
 $ ckqetools-phonon-dispersion -h
@@ -182,9 +131,9 @@ $ ckqetools-phonon-dispersion -h
 usage: ckqetools-phonon-dispersion [-h] --scf-input-path SCF_INPUT_PATH --scf-output-path SCF_OUTPUT_PATH
                                    --flvec-path FLVEC_PATH [--name NAME] [--phonon-json-path PHONON_JSON_PATH]
                                    [--disable-reorder] --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
-                                   [--high-symmetry-point-names [HIGH_SYMMETRY_POINT_NAMES ...]]
+                                   [--high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]] [--kayser]
                                    [--savedir SAVEDIR] [--savefname-extra SAVEFNAME_EXTRA] [--title TITLE]
-                                   [--emin EMIN] [--emax EMAX] [--colorful]
+                                   [--vmin VMIN] [--vmax VMAX] [--colorful]
 
 plot dispersion from "matdyn.modes" file. input and output file of scf calculation are also required.
 
@@ -199,22 +148,295 @@ options:
   --name NAME           name [default: test]
   --phonon-json-path PHONON_JSON_PATH
                         path of output json file [default: None]
-  --disable-reorder     if this oprion is "not" used: reorder eigenvalues at q by comparing the eigenvectors
+  --disable-reorder     if this option is "not" used: reorder eigenvalues at q by comparing the eigenvectors
                         and solve the band-crossings by phononweb
   --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
                         path of input file to make dispersion by matdyn.x
-  --high-symmetry-point-names [HIGH_SYMMETRY_POINT_NAMES ...]
-                        list of high-symmetry point names [default: None]
+  --high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]
+                        list of high-symmetry point labels [default: None]
+  --kayser              if True: phonon energy unit is kayser (cm^-1)
   --savedir SAVEDIR     directory name of saved figure [default: result]
   --savefname-extra SAVEFNAME_EXTRA
                         extra file name of saved figure
   --title TITLE         title of figure [default: None]
-  --emin EMIN           Emin of figure [default: 0]
-  --emax EMAX           Emax of figure [default: None]
+  --vmin VMIN           min val of figure [default: 0]
+  --vmax VMAX           max val of figure [default: None]
   --colorful            flag: dispersion lines are colorful
 ```
 
 
+
+📂tests/ へ移動
+
+
+
+#### sample1(通常ver)
+
+```
+$ ckqetools-phonon-dispersion \
+    --scf-input-path         sample/GaN/scf.in \
+    --scf-output-path        sample/GaN/scf.out \
+    --flvec-path             sample/GaN/freq/matdyn.modes \
+    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
+    --savefname-extra        __GaN \
+    --title                  GaN \
+    --savedir                result/GaN
+```
+
+![GaN-dispersion](figs/dispersion__GaN.svg)
+
+
+
+#### sample2(100点刻みver)
+
+![GaN-dispersion-100](figs/dispersion__GaN_100.svg)
+
+
+
+#### sample3(q座標ver)
+
+SCF計算で `ibrav` が0の場合には，`matdyn.x` 計算時の波数の経路をgG, Mなどの記号ではなく次のように座標で指定する必要がある。（対応するサンプルファイル：`sample/GaN/freq_qpointsspecs` ）
+
+```fortran
+9
+0.00000000 0.00000000 0.00000000 20 ! Gamma
+0.49999994 0.28867510 0.00000000 20 ! M
+0.33333329 0.57735020 0.00000000 20 ! K
+0.00000000 0.00000000 0.00000000 2  ! Gamma
+0.00000000 0.00000000 0.00000000 20 ! Gamma
+0.00000000 0.00000000 0.30707922 20 ! A
+0.49999994 0.28867510 0.30707922 20 ! L
+0.33333329 0.57735020 0.30707922 20 ! H
+0.00000000 0.00000000 0.30707922 1  ! A
+```
+
+このままでは，分散の横軸のラベルが不明となる。次のように，`--high-symmetry-point-labels` オプションを使えば，任意の分散の横軸ラベルを指定可能である。
+
+```
+$ ckqetools-phonon-dispersion \
+    --scf-input-path         sample/GaN/scf.in \
+    --scf-output-path        sample/GaN/scf.out \
+    --flvec-path             sample/GaN/freq_qpointsspecs/matdyn.modes \
+    --matdyn-freq-input-path sample/GaN/freq_qpointsspecs/matdyn.freq.in \
+    --savefname-extra        __GaN_qpointsspecs_w_highsym_labels \
+    --title                  GaN \
+    --savedir                result/GaN \
+    --high-symmetry-point-labels gG M K gG gG A L H A
+```
+
+
+
+| `--high-symmetry-point-labels` なし                          | `--high-symmetry-point-labels` あり                          |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![GaN-dispersion-qpoints-specs](figs/dispersion__GaN_qpointsspecs.svg) | ![GaN-dispersion-qpoints-specs](figs/dispersion__GaN_qpointsspecs_w_highsym_labels.svg) |
+
+
+
+#### sample4(colorful ver)
+
+```
+$ ckqetools-phonon-dispersion \
+    --scf-input-path         sample/GaN/scf.in \
+    --scf-output-path        sample/GaN/scf.out \
+    --flvec-path             sample/GaN/freq/matdyn.modes \
+    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
+    --savefname-extra        __GaN_colorful \
+    --title                  GaN \
+    --savedir                result/GaN \
+    --colorful
+```
+
+![GaN-dispersion-colorful](figs/dispersion__GaN_colorful.svg)
+
+
+
+#### sample5(disable-reorder)
+
+`--disable-reorder` オプションを付けると固有値の並び替えをせず，単に固有値の値の順に線を繋げただけになる。並び替えするときは，ある $q$ と隣の $q$ のそれぞれの固有ベクトルを比較して，適切なつなぎ方をする。（phononwebのサブルーチンを利用）。
+
+```
+$ ckqetools-phonon-dispersion \
+    --scf-input-path         sample/GaN/scf.in \
+    --scf-output-path        sample/GaN/scf.out \
+    --flvec-path             sample/GaN/freq/matdyn.modes \
+    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
+    --savefname-extra        __GaN_reorder \
+    --title                  GaN \
+    --savedir                result/GaN \
+    --colorful --disable-reorder
+```
+
+![GaN-dispersion-disable-reorder](figs/dispersion__GaN_disable_reorder.svg)
+
+
+
+### フォノン分散とDOSの両方
+
+`ckqetools-phonon-dos-dispersion`
+
+`ckqetools-phonon-dos` と `ckqetools-phonon-dispersion` の両方のオプションが使用できる。
+
+
+
+📂tests/ へ移動
+
+
+
+#### sample1(通常ver)
+
+```bash
+$ ckqetools-phonon-dos-dispersion \
+    --scf-input-path         sample/GaN/scf.in \
+    --scf-output-path        sample/GaN/scf.out \
+    --flvec-path             sample/GaN/freq/matdyn.modes \
+    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
+    --dos-path               sample/GaN/dos/matdyn.dos \
+    --savefname-extra        __GaN \
+    --title                  GaN \
+    --savedir                result/GaN
+```
+
+![GaN-dos-dispersion](figs/dos_dispersion__GaN.svg)
+
+
+
+#### sample2(kayser)
+
+フォノン周波数を cm$^{-1}$ の単位で表示するには `--kayser` オプションを付ける。
+
+```bash
+$ ckqetools-phonon-dos-dispersion \
+    --scf-input-path         sample/GaN/scf.in \
+    --scf-output-path        sample/GaN/scf.out \
+    --flvec-path             sample/GaN/freq/matdyn.modes \
+    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
+    --dos-path               sample/GaN/dos/matdyn.dos \
+    --savefname-extra        __GaN_kayser \
+    --title                  GaN \
+    --savedir                result/GaN \
+    --kayser
+```
+
+![GaN-dos-dispersion](figs/dos_dispersion__GaN_kayser.svg)
+
+
+
+
+
+
+
+## 実行スクリプト一覧
+
+### ckqetools-phonon-dos
+
+```
+$ ckqetools-phonon-dos -h
+
+usage: ckqetools-phonon-dos [-h] --dos-path DOS_PATH [--kayser] [--savedir SAVEDIR]
+                            [--savefname-extra SAVEFNAME_EXTRA] [--title TITLE] [--vmin VMIN] [--vmax VMAX]
+
+plot DOS from matdyn.dos file.
+
+options:
+  -h, --help            show this help message and exit
+  --dos-path DOS_PATH   matdyn.dos file path
+  --kayser              if True: phonon energy unit is kayser (cm^-1)
+  --savedir SAVEDIR     directory name of saved figure [default: result]
+  --savefname-extra SAVEFNAME_EXTRA
+                        extra file name of saved figure
+  --title TITLE         title of figure [default: None]
+  --vmin VMIN           min val of figure [default: 0]
+  --vmax VMAX           max val of figure [default: None]
+```
+
+
+
+### ckqetools-phonon-dispersion
+
+```
+$ ckqetools-phonon-dispersion -h
+
+usage: ckqetools-phonon-dispersion [-h] --scf-input-path SCF_INPUT_PATH --scf-output-path SCF_OUTPUT_PATH
+                                   --flvec-path FLVEC_PATH [--name NAME] [--phonon-json-path PHONON_JSON_PATH]
+                                   [--disable-reorder] --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
+                                   [--high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]] [--kayser]
+                                   [--savedir SAVEDIR] [--savefname-extra SAVEFNAME_EXTRA] [--title TITLE]
+                                   [--vmin VMIN] [--vmax VMAX] [--colorful]
+
+plot dispersion from "matdyn.modes" file. input and output file of scf calculation are also required.
+
+options:
+  -h, --help            show this help message and exit
+  --scf-input-path SCF_INPUT_PATH
+                        path of input file of scf calculation
+  --scf-output-path SCF_OUTPUT_PATH
+                        path of output file of scf calculation
+  --flvec-path FLVEC_PATH
+                        path of flvec file (output of matdyn.x) [QE default: "matdyn.modes"]
+  --name NAME           name [default: test]
+  --phonon-json-path PHONON_JSON_PATH
+                        path of output json file [default: None]
+  --disable-reorder     if this option is "not" used: reorder eigenvalues at q by comparing the eigenvectors
+                        and solve the band-crossings by phononweb
+  --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
+                        path of input file to make dispersion by matdyn.x
+  --high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]
+                        list of high-symmetry point labels [default: None]
+  --kayser              if True: phonon energy unit is kayser (cm^-1)
+  --savedir SAVEDIR     directory name of saved figure [default: result]
+  --savefname-extra SAVEFNAME_EXTRA
+                        extra file name of saved figure
+  --title TITLE         title of figure [default: None]
+  --vmin VMIN           min val of figure [default: 0]
+  --vmax VMAX           max val of figure [default: None]
+  --colorful            flag: dispersion lines are colorful
+```
+
+
+
+### ckqetools-phonon-dos-dispersion
+
+```
+$ ckqetools-phonon-dos-dispersion -h
+
+usage: ckqetools-phonon-dos-dispersion [-h] --dos-path DOS_PATH --scf-input-path SCF_INPUT_PATH
+                                       --scf-output-path SCF_OUTPUT_PATH --flvec-path FLVEC_PATH [--name NAME]
+                                       [--phonon-json-path PHONON_JSON_PATH] [--disable-reorder]
+                                       --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
+                                       [--high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]]
+                                       [--kayser] [--savedir SAVEDIR] [--savefname-extra SAVEFNAME_EXTRA]
+                                       [--title TITLE] [--vmin VMIN] [--vmax VMAX] [--colorful]
+
+plot DOS and dispersion from "matdyn.dos" and "matdyn.modes" files. input and output file of scf calculation
+are also required.
+
+options:
+  -h, --help            show this help message and exit
+  --dos-path DOS_PATH   matdyn.dos file path
+  --scf-input-path SCF_INPUT_PATH
+                        path of input file of scf calculation
+  --scf-output-path SCF_OUTPUT_PATH
+                        path of output file of scf calculation
+  --flvec-path FLVEC_PATH
+                        path of flvec file (output of matdyn.x) [QE default: "matdyn.modes"]
+  --name NAME           name [default: test]
+  --phonon-json-path PHONON_JSON_PATH
+                        path of output json file [default: None]
+  --disable-reorder     if this option is "not" used: reorder eigenvalues at q by comparing the eigenvectors
+                        and solve the band-crossings by phononweb
+  --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
+                        path of input file to make dispersion by matdyn.x
+  --high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]
+                        list of high-symmetry point labels [default: None]
+  --kayser              if True: phonon energy unit is kayser (cm^-1)
+  --savedir SAVEDIR     directory name of saved figure [default: result]
+  --savefname-extra SAVEFNAME_EXTRA
+                        extra file name of saved figure
+  --title TITLE         title of figure [default: None]
+  --vmin VMIN           min val of figure [default: 0]
+  --vmax VMAX           max val of figure [default: None]
+  --colorful            flag: dispersion lines are colorful
+```
 
 
 
@@ -272,7 +494,7 @@ options:
 
 フォノンのエネルギーはどの方向から波数が0に近づくかによって値が異なることがあるため，$\Gamma$ 点でのフォノン分散は不連続になることがある。例えばGaNの場合で $\mathrm{K} \to \Gamma \to \mathrm{A}$ の分散を上記の入力ファイルの形式で計算し，グラフを作成すると次の図のようになる。この場合，$\Gamma$ 点上のデータは $\mathrm{K}$ 方向から波数0に近づいた極限の値がプロットされているため，$\mathrm{A}$ 点方向のデータから線をつなげると斜めになってしまう。
 
-![dispersion-gamma-discontinuity](C:/Users/mczk/OneDrive/ChibaUniv/Lab/first_principles_calculation/phonon/fig/dispersion_gamma_discontinuity.png)
+![dispersion-gamma-discontinuity](figs/dispersion_gamma_discontinuity.png)
 
 QEの `matdyn.x` 入力ファイルのマニュアル(https://www.quantum-espresso.org/Doc/INPUT_MATDYN.html)には次のように書かれている。
 
@@ -284,7 +506,7 @@ QEの `matdyn.x` 入力ファイルのマニュアル(https://www.quantum-espres
 
 
 
-そこで，上記の問題を避けるためには，次のように途中に $\Gamma \to \Gamma$ という2点を挟めば良い。
+そこで，上記の問題を避けるためには，次のように途中に $\Gamma \to \Gamma$ という2点を追加すれば良い。
 
 ```fortran
 9
@@ -299,4 +521,4 @@ H    20
 A    1
 ```
 
-`ckqetools-phonon-dispersion`, `cktools-phonon-dos-dispersion` では，同じ点が2連続で続く場合（例えばgG, gG）には，その間の線を切ってプロットする。
+`ckqetools-phonon-dispersion`, `cktools-phonon-dos-dispersion` では，同じ点が2連続で続く場合（例えばgG, gG）に，その間の線を切ってプロットする。

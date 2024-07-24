@@ -3,5 +3,6 @@ build/
 **/_version.py
 
 **/__pycache__/**
+tests/result
 tools/
 

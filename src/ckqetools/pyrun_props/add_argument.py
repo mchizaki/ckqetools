@@ -29,7 +29,7 @@ def addarg_phonon(
     )
     parser.add_argument(
         '--disable-reorder', action='store_true',
-        help = 'if this oprion is "not" used: \
+        help = 'if this option is "not" used: \
             reorder eigenvalues at q by comparing the eigenvectors \
             and solve the band-crossings by phononweb\
             '
@@ -77,6 +77,16 @@ def addarg_highsym_pts_labels(
     return 'high_symmetry_point_labels'
 
 
+def addarg_kayser(
+    parser: ArgumentParser
+):
+    parser.add_argument(
+        '--kayser', action='store_true',
+        help = 'if True: phonon energy unit is kayser (cm^-1)'
+    )
+    return 'kayser'
+
+
 def addarg_saveprops(
     parser: ArgumentParser,
     default_savedir: str = 'result'
@@ -104,12 +114,12 @@ def addarg_figprops(
         help = f'title of figure [default: {None}]'
     )
     parser.add_argument(
-        '--emin', type=float, default=0,
-        help = f'Emin of figure [default: {0}]'
+        '--vmin', type=float, default=0,
+        help = f'min val of figure [default: {0}]'
     )
     parser.add_argument(
-        '--emax', type=float, default=None,
-        help = f'Emax of figure [default: {None}]'
+        '--vmax', type=float, default=None,
+        help = f'max val of figure [default: {None}]'
     )
-    return 'title', 'emin', 'emax'
+    return 'title', 'vmin', 'vmax'
 
