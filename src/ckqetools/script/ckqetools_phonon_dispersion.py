@@ -9,7 +9,7 @@ import ckplotlib.ckplot as cplt
 
 from ckqetools.phonon.phonon import Phonon
 from ckqetools.pyrun_props.add_argument import (
-    addarg_highsym_pts_names,
+    addarg_highsym_pts_labels,
     addarg_phonon,
     addarg_matdyn_freq_input,
     addarg_saveprops,
@@ -34,7 +34,7 @@ def main():
 
     addarg_phonon( parser )
     addarg_matdyn_freq_input( parser )
-    addarg_highsym_pts_names( parser )
+    addarg_highsym_pts_labels( parser )
 
     addarg_saveprops( parser )
     addarg_figprops( parser )
@@ -57,7 +57,7 @@ def main():
         flvec_path          = args.flvec_path,
         matdyn_freq_in_path = args.matdyn_freq_input_path,
         json_out_path       = args.phonon_json_path,
-        highsym_qpts_names  = args.high_symmetry_point_names,
+        highsym_qpts_labels = args.high_symmetry_point_labels,
         reorder             = not args.disable_reorder
     )
 

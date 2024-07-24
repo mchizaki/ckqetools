@@ -26,21 +26,21 @@ class HighSymmetryPointFigureProps():
     def __init__(
         self,
         matdyn_freq_in_path: str = 'matdyn.freq.in',
-        highsym_point_names: list[str] | None = None
+        highsym_point_labels: list[str] | None = None
     ):
         highsym_pts = self.read_high_symmetry_points( matdyn_freq_in_path )
 
 
         #--------------------------------------------------------------#
-        # update high_symmetry_points names if None
+        # update high_symmetry_points labels if None
         #--------------------------------------------------------------#
-        if highsym_point_names is not None:
-            if len( highsym_point_names ) != len( highsym_pts ):
-                print( '[error] invalid length of list of highsym_point_names' )
+        if highsym_point_labels is not None:
+            if len( highsym_point_labels ) != len( highsym_pts ):
+                print( '[error] invalid length of list of highsym_point_labels' )
                 sys.exit(1)
 
-            for name, highSymPt in zip( highsym_point_names, highsym_pts ):
-                highSymPt.tex = self._replace_high_symmetry_point_name( name )
+            for label, highSymPt in zip( highsym_point_labels, highsym_pts ):
+                highSymPt.tex = self._replace_high_symmetry_point_label( label )
 
 
         #--------------------------------------------------------------#
@@ -129,7 +129,7 @@ class HighSymmetryPointFigureProps():
                 line_list = line_str.split()
 
                 point: list = line_list[:-1]
-                tex:   str  = self._replace_high_symmetry_point_name( point, i = i )
+                tex:   str  = self._replace_high_symmetry_point_label( point, i = i )
                 num:   int  = int( line_list[-1] )
 
                 high_symmetry_points.append(
@@ -144,24 +144,24 @@ class HighSymmetryPointFigureProps():
 
 
     @staticmethod
-    def _replace_high_symmetry_point_name(
-        name: str | list,
+    def _replace_high_symmetry_point_label(
+        label: str | list,
         i: int | None = None
     ) -> str:
 
-        if isinstance( name, list ):
-            if len( name ) == 1:
-                name = name[0]
+        if isinstance( label, list ):
+            if len( label ) == 1:
+                label = label[0]
             else:
-                # name = str( name )
-                # name = str( i )
-                name = f'$Q_{i}$'
-                return name
+                # label = str( label )
+                # label = str( i )
+                label = f'$Q_{i}$'
+                return label
 
-        if name == 'gG':
-            name = r'$\mathrm{\Gamma}$'
-        elif name == 'gS':
-            name = r'$\mathrm{\Sigma}$'
+        if label == 'gG':
+            label = r'$\mathrm{\Gamma}$'
+        elif label == 'gS':
+            label = r'$\mathrm{\Sigma}$'
         else:
-            name = rf'$\mathrm{{{name}}}$'
-        return name
+            label = rf'$\mathrm{{{label}}}$'
+        return label

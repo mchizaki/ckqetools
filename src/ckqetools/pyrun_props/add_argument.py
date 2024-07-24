@@ -67,14 +67,14 @@ def addarg_dispersion(
     return 'dispersion_path'
 
 
-def addarg_highsym_pts_names(
+def addarg_highsym_pts_labels(
     parser: ArgumentParser
 ):
     parser.add_argument(
-        '--high-symmetry-point-names', nargs='*', type=str, default=None,
-        help = 'list of high-symmetry point names [default: None]'
+        '--high-symmetry-point-labels', nargs='*', type=str, default=None,
+        help = 'list of high-symmetry point labels [default: None]'
     )
-    return 'qpoint_names'
+    return 'high_symmetry_point_labels'
 
 
 def addarg_saveprops(

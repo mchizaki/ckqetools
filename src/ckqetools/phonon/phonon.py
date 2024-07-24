@@ -20,7 +20,7 @@ class Phonon():
         scf_out_path: str = 'scf.out',
         flvec_path:   str = 'matdyn.modes',
         matdyn_freq_in_path: str | None = None,
-        highsym_qpts_names: list[str] | None = None,
+        highsym_qpts_labels: list[str] | None = None,
         json_out_path: str | None = None,
         **kwargs
     ) -> None:
@@ -54,8 +54,8 @@ class Phonon():
         # high-symmetry q points
         if matdyn_freq_in_path is not None:
             self.highSymQPtFigProps = HighSymmetryPointFigureProps(
-                matdyn_freq_in_path = matdyn_freq_in_path,
-                highsym_point_names = highsym_qpts_names
+                matdyn_freq_in_path  = matdyn_freq_in_path,
+                highsym_point_labels = highsym_qpts_labels
             )
         else:
             self.highSymQPtFigProps = None

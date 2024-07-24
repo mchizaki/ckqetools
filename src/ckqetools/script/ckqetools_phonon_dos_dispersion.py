@@ -11,7 +11,7 @@ import ckplotlib.ckplot as cplt
 from ckqetools.phonon.dos import DOS
 from ckqetools.phonon.phonon import Phonon
 from ckqetools.pyrun_props.add_argument import (
-    addarg_highsym_pts_names,
+    addarg_highsym_pts_labels,
     addarg_phonon,
     addarg_dos,
     addarg_matdyn_freq_input,
@@ -42,7 +42,7 @@ def main():
     addarg_dos( parser )
     addarg_phonon( parser )
     addarg_matdyn_freq_input( parser )
-    addarg_highsym_pts_names( parser )
+    addarg_highsym_pts_labels( parser )
 
     addarg_saveprops( parser )
     addarg_figprops( parser )
