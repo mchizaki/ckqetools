@@ -2,6 +2,7 @@
 * Written by CK
 """
 import sys
+from pprint import pprint
 from dataclasses import dataclass, field
 
 @dataclass
@@ -83,7 +84,7 @@ class HighSymmetryPointFigureProps():
 
         print( '\nticks_list' )
         for _ticks in self.ticks_list:
-            print( _ticks )
+            pprint( vars( _ticks ) )
 
 
     def read_high_symmetry_points( self, path: str ) -> list[type[HighSymmetryPoint]]:

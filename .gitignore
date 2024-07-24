@@ -3,6 +3,5 @@ build/
 **/_version.py
 
 **/__pycache__/**
-result/
 tools/
 
