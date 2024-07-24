@@ -1,0 +1,33 @@
+&control
+  calculation   = 'scf'
+  restart_mode  = 'from_scratch'
+  prefix        = 'GaN'
+  outdir        = 'out_GaN'
+/
+
+&system
+  ibrav   = 4
+  a       = 3.18893040
+  c       = 5.19235725
+  nat     = 4
+  ntyp    = 2
+  ecutwfc = 100
+  ecutrho = 400
+/
+
+&electrons
+/
+
+k_points {automatic}
+4 4 4 1 1 1
+
+ATOMIC_SPECIES
+  Ga   69.72300  Ga.pbe-dn-kjpaw_psl.1.0.0.UPF
+   N   14.00650  N.pbe-n-kjpaw_psl.1.0.0.UPF
+
+ATOMIC_POSITIONS {crystal}
+Ga   0.666666666666667   0.333333333333333   0.499083710000000
+Ga   0.333333333333333   0.666666666666667   0.999083710000000
+ N   0.666666666666667   0.333333333333333   0.875916290000000
+ N   0.333333333333333   0.666666666666667   0.375916290000000
+

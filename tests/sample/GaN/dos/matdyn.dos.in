@@ -1,0 +1,10 @@
+&input
+  flfrc = '../GaN.fc'
+  flfrq = 'GaN.dos'
+  asr   = 'simple'
+  dos   = .true.
+  nk1   = 64 
+  nk2   = 64 
+  nk3   = 64 
+/
+

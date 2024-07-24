@@ -81,11 +81,9 @@ class HighSymmetryPointFigureProps():
 
         self.n_points = index_k
 
-        print( 'test' )
-        print( self.n_points )
-        print( self.ticks.indices )
-        print( self.ticks.labels )
-        print( self.ticks_list )
+        print( '\nticks_list' )
+        for _ticks in self.ticks_list:
+            print( _ticks )
 
 
     def read_high_symmetry_points( self, path: str ) -> list[type[HighSymmetryPoint]]:

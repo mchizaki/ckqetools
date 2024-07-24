@@ -1,0 +1,17 @@
+&input
+  flfrc           = '../GaN.fc'
+  flfrq           = 'GaN.freq'
+  q_in_band_form  = .true.
+  asr             = 'simple'
+/
+9
+gG   20 
+M    20 
+K    20
+gG   2 
+gG   20
+A    20 
+L    20 
+H    20 
+A    1
+
