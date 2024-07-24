@@ -5,6 +5,7 @@
 import argparse
 import matplotlib.pyplot as plt
 import ckplotlib.ckplot as cplt
+
 from ckqetools.phonon.dos import DOS
 from ckqetools.pyrun_props.add_argument import (
     addarg_dos,

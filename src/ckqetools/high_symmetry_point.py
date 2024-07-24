@@ -1,5 +1,8 @@
+"""
+* Written by CK
+"""
 import sys
-from dataclasses import dataclass, replace, field
+from dataclasses import dataclass, field
 
 @dataclass
 class HighSymmetryPoint():
@@ -22,21 +25,21 @@ class HighSymmetryPointFigureProps():
     def __init__(
         self,
         matdyn_freq_in_path: str = 'matdyn.freq.in',
-        highsym_qpts_names: list[str] | None = None
+        highsym_point_names: list[str] | None = None
     ):
-        highsym_qpts = self.read_high_symmetry_points( matdyn_freq_in_path )
+        highsym_pts = self.read_high_symmetry_points( matdyn_freq_in_path )
 
 
         #--------------------------------------------------------------#
         # update high_symmetry_points names if None
         #--------------------------------------------------------------#
-        if highsym_qpts_names is not None:
-            if len( highsym_qpts_names ) != len( highsym_qpts ):
-                print( '[error] invalid length of list of highsym_qpts_names' )
+        if highsym_point_names is not None:
+            if len( highsym_point_names ) != len( highsym_pts ):
+                print( '[error] invalid length of list of highsym_point_names' )
                 sys.exit(1)
 
-            for name, highSymQPt in zip( highsym_qpts_names, highsym_qpts ):
-                highSymQPt.tex = self._replace_high_symmetry_point_name( name )
+            for name, highSymPt in zip( highsym_point_names, highsym_pts ):
+                highSymPt.tex = self._replace_high_symmetry_point_name( name )
 
 
         #--------------------------------------------------------------#
@@ -47,25 +50,25 @@ class HighSymmetryPointFigureProps():
         group_index = 0
         index_k = 0
 
-        for i, highSymQPt in enumerate( highsym_qpts ):
+        for i, highSymPt in enumerate( highsym_pts ):
 
             cut_line = False
             if i > 0:
-                cut_line = ( highSymQPt.point == _highSymQPt.point )
+                cut_line = ( highSymPt.point == _highSymPt.point )
 
             if cut_line:
                 self.ticks_list.append( HighSymmetryPointTicks() )
                 group_index += 1
 
             self.ticks_list[ group_index ].indices.append( index_k )
-            self.ticks_list[ group_index ].labels.append( highSymQPt.tex )
+            self.ticks_list[ group_index ].labels.append( highSymPt.tex )
 
-            if i == len( highsym_qpts ) - 1:
+            if i == len( highsym_pts ) - 1:
                 index_k += 1
-            elif highSymQPt.num is not None:
-                index_k += highSymQPt.num
+            elif highSymPt.num is not None:
+                index_k += highSymPt.num
 
-            _highSymQPt = highSymQPt
+            _highSymPt = highSymPt
 
         # self.ticks = replace( self.ticks_list[0] )
         self.ticks = HighSymmetryPointTicks(

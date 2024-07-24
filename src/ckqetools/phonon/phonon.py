@@ -1,3 +1,6 @@
+"""
+* Written by CK
+"""
 import sys
 import numpy as np
 import numpy.typing as npt
@@ -52,7 +55,7 @@ class Phonon():
         if matdyn_freq_in_path is not None:
             self.highSymQPtFigProps = HighSymmetryPointFigureProps(
                 matdyn_freq_in_path = matdyn_freq_in_path,
-                highsym_qpts_names  = highsym_qpts_names
+                highsym_point_names = highsym_qpts_names
             )
         else:
             self.highSymQPtFigProps = None
