@@ -1,5 +1,5 @@
 # ckqetools
-Quantum ESPRESSO (QE)の結果を解析するためのツール。
+Quantum ESPRESSO (QE) の結果を解析するためのツール
 
 
 
@@ -496,7 +496,7 @@ options:
 
 ![dispersion-gamma-discontinuity](figs/dispersion_gamma_discontinuity.png)
 
-QEの `matdyn.x` 入力ファイルのマニュアル(https://www.quantum-espresso.org/Doc/INPUT_MATDYN.html)には次のように書かれている。
+QEの `matdyn.x` 入力ファイルの[マニュアル](https://www.quantum-espresso.org/Doc/INPUT_MATDYN.html)には次のように書かれている。
 
 > If q = 0, the direction qhat (q=>0) for the non-analytic part is extracted from the sequence of q-points as follows:
 >
