@@ -25,12 +25,34 @@ class Phonon():
         **kwargs
     ) -> None:
 
+        # high-symmetry q points for ticks
+        if matdyn_freq_in_path is not None:
+            self.highSymQPtFigProps = HighSymmetryPointFigureProps(
+                matdyn_freq_in_path  = matdyn_freq_in_path,
+                highsym_point_labels = highsym_qpts_labels
+            )
+        else:
+            self.highSymQPtFigProps = None
+
+        # high-symmetry q points for json
+        highsym_qpts = []
+        if self.highSymQPtFigProps is not None:
+            for i_group in range( len( self.highSymQPtFigProps.ticks_list ) ):
+                indices = self.highSymQPtFigProps.ticks_list[ i_group ].indices
+                labels  = self.highSymQPtFigProps.ticks_list[ i_group ].labels
+                for i, l in zip( indices, labels ):
+                    _l =  l.replace( r'$\mathrm{', '' )
+                    _l = _l.replace( '}$', '' )
+                    highsym_qpts.append( [ i+1, _l ] )
+
+
         self.phonon_props = self.read_phonon_props(
             name          = name,
             scf_in_path   = scf_in_path,
             scf_out_path  = scf_out_path,
             flvec_path    = flvec_path,
             json_out_path = json_out_path,
+            highsym_qpts  = highsym_qpts,
             **kwargs
         )
 
@@ -49,16 +71,6 @@ class Phonon():
         self.n_atoms   = self.phonon_props[ 'natoms' ]
         self.n_modes   = len( self.eigenvalues_kayser[0] )
         self.n_qpoints = len( self.qpoints )
-
-
-        # high-symmetry q points
-        if matdyn_freq_in_path is not None:
-            self.highSymQPtFigProps = HighSymmetryPointFigureProps(
-                matdyn_freq_in_path  = matdyn_freq_in_path,
-                highsym_point_labels = highsym_qpts_labels
-            )
-        else:
-            self.highSymQPtFigProps = None
 
 
     def set_xticks( self ) -> None:
@@ -93,6 +105,7 @@ class Phonon():
         scf_out_path: str = 'scf.out',
         flvec_path:   str = 'matdyn.modes',
         json_out_path: str | None = None,
+        highsym_qpts: list | None = None,
         **kwargs
     ) -> dict:
 
@@ -105,10 +118,14 @@ class Phonon():
         with open( flvec_path ) as f:
             matdyn_modes = f.read()
 
+        if highsym_qpts is None:
+            highsym_qpts = []
+
         phonons = QePhononQetools(
             scf_input     = scf_input,
             scf_output    = scf_output,
             matdyn_modes  = matdyn_modes,
+            highsym_qpts  = highsym_qpts,
             # highsym_qpts  = [],
             # starting_reps = (),
             # reorder       = True,

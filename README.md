@@ -101,11 +101,9 @@ options:
 
 
 
-📂tests/ へ移動
-
-
-
 #### sample
+
+📂tests/ へ移動
 
 ```bash
 $ ckqetools-phonon-dos \
@@ -323,6 +321,32 @@ $ ckqetools-phonon-dos-dispersion \
 
 
 
+### phononwebsite用のjsonファイルの出力
+
+`ckqetools-phonon-json`
+
+[phononwebsite](https://henriquemiranda.github.io/phononwebsite/phonon.html) で利用できるjsonファイルを出力する。
+
+
+
+#### sample
+
+📂tests/ へ移動
+
+```bash
+$ ckqetools-phonon-json \
+    --scf-input-path         sample/GaN/scf.in \
+    --scf-output-path        sample/GaN/scf.out \
+    --flvec-path             sample/GaN/freq/matdyn.modes \
+    --matdyn-freq-input-path sample/GaN/freq/matdyn.freq.in \
+    --phonon-json-path       result/GaN/GaN.json \
+    --name                   GaN
+```
+
+`📄result/GaN/GaN.json` が出力される。[phononwebsite](https://henriquemiranda.github.io/phononwebsite/phonon.html) の"Custom file"から読み込む。
+
+
+
 
 
 ## 実行スクリプト一覧
@@ -439,6 +463,38 @@ options:
 ```
 
 
+
+### ckqetools-phonon-json
+
+```
+$ ckqetools-phonon-json -h
+
+usage: ckqetools-phonon-json [-h] --scf-input-path SCF_INPUT_PATH --scf-output-path SCF_OUTPUT_PATH
+                             --flvec-path FLVEC_PATH [--name NAME] [--phonon-json-path PHONON_JSON_PATH]
+                             [--disable-reorder] --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
+                             [--high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]]
+
+get phonon json for phononwebsite from "matdyn.modes" file. input and output file of scf calculation are also
+required.
+
+options:
+  -h, --help            show this help message and exit
+  --scf-input-path SCF_INPUT_PATH
+                        path of input file of scf calculation
+  --scf-output-path SCF_OUTPUT_PATH
+                        path of output file of scf calculation
+  --flvec-path FLVEC_PATH
+                        path of flvec file (output of matdyn.x) [QE default: "matdyn.modes"]
+  --name NAME           name [default: test]
+  --phonon-json-path PHONON_JSON_PATH
+                        path of output json file [default: None]
+  --disable-reorder     if this option is "not" used: reorder eigenvalues at q by comparing the eigenvectors
+                        and solve the band-crossings by phononweb
+  --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
+                        path of input file to make dispersion by matdyn.x
+  --high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]
+                        list of high-symmetry point labels [default: None]
+```
 
 
 

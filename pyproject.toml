@@ -23,6 +23,7 @@ dynamic = ["version"]
 ckqetools-phonon-dos            = "ckqetools.script.ckqetools_phonon_dos:main"
 ckqetools-phonon-dispersion     = "ckqetools.script.ckqetools_phonon_dispersion:main"
 ckqetools-phonon-dos-dispersion = "ckqetools.script.ckqetools_phonon_dos_dispersion:main"
+ckqetools-phonon-json           = "ckqetools.script.ckqetools_phonon_json:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
