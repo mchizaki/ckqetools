@@ -79,26 +79,6 @@ QEの結果のサンプルファイルを `tests/sample/GaN/` 内に格納した
 
 `ckqetools-phonon-dos`
 
-```
-$ ckqetools-phonon-dos -h
-
-usage: ckqetools-phonon-dos [-h] --dos-path DOS_PATH [--kayser] [--savedir SAVEDIR]
-                            [--savefname-extra SAVEFNAME_EXTRA] [--title TITLE] [--vmin VMIN] [--vmax VMAX]
-
-plot DOS from matdyn.dos file.
-
-options:
-  -h, --help            show this help message and exit
-  --dos-path DOS_PATH   matdyn.dos file path
-  --kayser              if True: phonon energy unit is kayser (cm^-1)
-  --savedir SAVEDIR     directory name of saved figure [default: result]
-  --savefname-extra SAVEFNAME_EXTRA
-                        extra file name of saved figure
-  --title TITLE         title of figure [default: None]
-  --vmin VMIN           min val of figure [default: 0]
-  --vmax VMAX           max val of figure [default: None]
-```
-
 
 
 #### sample
@@ -123,52 +103,11 @@ $ ckqetools-phonon-dos \
 
 `ckqetools-phonon-dispersion`
 
-```
-$ ckqetools-phonon-dispersion -h
-
-usage: ckqetools-phonon-dispersion [-h] --scf-input-path SCF_INPUT_PATH --scf-output-path SCF_OUTPUT_PATH
-                                   --flvec-path FLVEC_PATH [--name NAME] [--phonon-json-path PHONON_JSON_PATH]
-                                   [--disable-reorder] --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
-                                   [--high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]] [--kayser]
-                                   [--savedir SAVEDIR] [--savefname-extra SAVEFNAME_EXTRA] [--title TITLE]
-                                   [--vmin VMIN] [--vmax VMAX] [--colorful]
-
-plot dispersion from "matdyn.modes" file. input and output file of scf calculation are also required.
-
-options:
-  -h, --help            show this help message and exit
-  --scf-input-path SCF_INPUT_PATH
-                        path of input file of scf calculation
-  --scf-output-path SCF_OUTPUT_PATH
-                        path of output file of scf calculation
-  --flvec-path FLVEC_PATH
-                        path of flvec file (output of matdyn.x) [QE default: "matdyn.modes"]
-  --name NAME           name [default: test]
-  --phonon-json-path PHONON_JSON_PATH
-                        path of output json file [default: None]
-  --disable-reorder     if this option is "not" used: reorder eigenvalues at q by comparing the eigenvectors
-                        and solve the band-crossings by phononweb
-  --matdyn-freq-input-path MATDYN_FREQ_INPUT_PATH
-                        path of input file to make dispersion by matdyn.x
-  --high-symmetry-point-labels [HIGH_SYMMETRY_POINT_LABELS ...]
-                        list of high-symmetry point labels [default: None]
-  --kayser              if True: phonon energy unit is kayser (cm^-1)
-  --savedir SAVEDIR     directory name of saved figure [default: result]
-  --savefname-extra SAVEFNAME_EXTRA
-                        extra file name of saved figure
-  --title TITLE         title of figure [default: None]
-  --vmin VMIN           min val of figure [default: 0]
-  --vmax VMAX           max val of figure [default: None]
-  --colorful            flag: dispersion lines are colorful
-```
-
-
-
-📂tests/ へ移動
-
 
 
 #### sample1(通常ver)
+
+📂tests/ へ移動
 
 ```
 $ ckqetools-phonon-dispersion \
@@ -276,11 +215,9 @@ $ ckqetools-phonon-dispersion \
 
 
 
-📂tests/ へ移動
-
-
-
 #### sample1(通常ver)
+
+📂tests/ へ移動
 
 ```bash
 $ ckqetools-phonon-dos-dispersion \
