@@ -20,7 +20,7 @@ from ckqetools.pyrun_props.add_argument import (
 )
 
 SAVE_FNAME = 'dos_dispersion'
-PLT_PROPS = dict(
+DISPERSION_PLOT_PROPS = dict(
     color = cplt.ckcolor['blue'],
     linewidth = 1
 )
@@ -80,7 +80,7 @@ def main():
     # Dispersion (meV)
     #--------------------------------------------------------------#
     if args.colorful:
-        PLT_PROPS.pop( 'color' )
+        DISPERSION_PLOT_PROPS.pop( 'color' )
 
     margins = [
         0.05 if args.emin is None else 0,
@@ -149,7 +149,7 @@ def main():
             plt.plot(
                 q_points,
                 energies,
-                **PLT_PROPS
+                **DISPERSION_PLOT_PROPS
             )
 
         phonon.set_xticks()
