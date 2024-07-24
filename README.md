@@ -302,7 +302,7 @@ $ ckqetools-phonon-dos-dispersion \
 
 #### sample2(kayser)
 
-フォノン周波数を cm$^{-1}$ の単位で表示するには `--kayser` オプションを付ける。
+フォノン周波数を cm$`^{-1}`$ の単位で表示するには `--kayser` オプションを付ける。
 
 ```bash
 $ ckqetools-phonon-dos-dispersion \
@@ -492,7 +492,7 @@ options:
 
 #### 経路の途中にΓ点がある場合
 
-フォノンのエネルギーはどの方向から波数が0に近づくかによって値が異なることがあるため，$`\Gamma`$ 点でのフォノン分散は不連続になることがある。例えばGaNの場合で $\mathrm{K} \to \Gamma \to \mathrm{A}$ の分散を上記の入力ファイルの形式で計算し，グラフを作成すると次の図のようになる。この場合，$ \Gamma $ 点上のデータは $\mathrm{K}$ 方向から波数0に近づいた極限の値がプロットされているため，$\mathrm{A}$ 点方向のデータから線をつなげると斜めになってしまう。
+フォノンのエネルギーはどの方向から波数が0に近づくかによって値が異なることがあるため，$`\Gamma`$ 点でのフォノン分散は不連続になることがある。例えばGaNの場合で $`\mathrm{K} \to \Gamma \to \mathrm{A}`$ の分散を上記の入力ファイルの形式で計算し，グラフを作成すると次の図のようになる。この場合，$`\Gamma`$ 点上のデータは $`\mathrm{K}`$ 方向から波数0に近づいた極限の値がプロットされているため，$`\mathrm{A}`$ 点方向のデータから線をつなげると斜めになってしまう。
 
 ![dispersion-gamma-discontinuity](figs/dispersion_gamma_discontinuity.png)
 
