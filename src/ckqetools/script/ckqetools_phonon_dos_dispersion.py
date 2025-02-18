@@ -100,7 +100,7 @@ def main():
     dos_figure_props = cplt.get_figure_props(
         save_dirname = f'{args.savedir}',
         save_fname   = f'{SAVE_FNAME}{args.savefname_extra}',
-        plt_props = dict(
+        plt_args = dict(
             xlabel = 'DOS'
         ),
         ymin = args.vmin,
@@ -110,7 +110,7 @@ def main():
         common_xlim = False
     )
     dispersion_figure_props = cplt.get_figure_props(
-        plt_props = dict(
+        plt_args = dict(
             xlabel = 'Wavenumber',
             ylabel = freq_unit_label,
         ),

@@ -63,7 +63,7 @@ def main():
     figure_props = cplt.get_figure_props(
         save_dirname = f'{args.savedir}',
         save_fname   = f'{SAVE_FNAME}{args.savefname_extra}',
-        plt_props = dict(
+        plt_args = dict(
             xlabel = freq_unit_label,
             ylabel = 'DOS',
             title = args.title
